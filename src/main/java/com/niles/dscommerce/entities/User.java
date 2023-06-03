@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_user")
@@ -18,6 +18,9 @@ public class User implements Serializable {
     private String phone;
     private LocalDate birthDate;
     private String password;
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders = new ArrayList<>();
+
 
     public User() {
     }
@@ -33,10 +36,6 @@ public class User implements Serializable {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -77,6 +76,10 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
     }
 
     @Override
