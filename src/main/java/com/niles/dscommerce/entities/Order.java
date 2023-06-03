@@ -15,8 +15,12 @@ public class Order implements Serializable {
     private Long id;
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    //pega o momento sem UTC. Será definido no tratamento do dado.
     private Instant moment;
     private OrderStatus status;
+
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -25,9 +29,11 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(Instant moment, OrderStatus status, User client) {
+    public Order(Long id, Instant moment, OrderStatus status, Payment payment, User client) {
+        this.id = id;
         this.moment = moment;
         this.status = status;
+        this.payment = payment;
         this.client = client;
     }
 
@@ -35,6 +41,9 @@ public class Order implements Serializable {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Instant getMoment() {
         return moment;
@@ -50,6 +59,14 @@ public class Order implements Serializable {
 
     public void setStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     public User getClient() {
