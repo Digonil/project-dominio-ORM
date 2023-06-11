@@ -1,5 +1,6 @@
 package com.niles.dscommerce.entities;
 
+import com.niles.dscommerce.dto.ProductDTO;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -37,6 +38,13 @@ public class Product implements Serializable {
         this.description = description;
         this.price = price;
         this.imgUrl = imgUrl;
+    }
+
+    public Product(ProductDTO dto) {
+        this.name = dto.getName();
+        this.description = dto.getDescription();
+        this.price = dto.getPrice();
+        this.imgUrl = dto.getImgUrl();
     }
 
     public Long getId() {
